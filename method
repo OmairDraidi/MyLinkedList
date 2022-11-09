@@ -1,0 +1,182 @@
+package MyLinkedList;
+
+import java.util.Collections;
+import java.util.*;
+import javax.print.attribute.standard.MediaSize;
+
+public class MyLinkedList<E> {
+
+    Node head = null, tail = null;
+    int size;
+
+    public MyLinkedList() {
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size <= 0;
+    }
+
+    public boolean add(E e) {
+        Node temp = new Node(e);
+        if (size == 0) {
+            head = temp;
+            tail = temp;
+        }
+        Node curr = head;
+        while (curr.next != null) {
+            curr = curr.next;
+        }
+        curr.next = temp;
+        tail = temp;
+        temp.next = null;
+        size++;
+        return true;
+    }
+
+    public boolean addByIndex(int index, E e) {
+        Node temp = new Node(e);
+        if (isEmpty()) {
+            head = tail = temp;
+        }
+        Node curr = head;
+        for (int i = 1; i < index - 1; i++) {
+            curr = curr.next;
+        }
+        temp.next = curr.next;
+        curr.next = temp;
+        size++;
+        return true;
+    }
+
+    public boolean addFirst(E e) {
+        Node temp = new Node(e);
+        if (isEmpty()) {
+            head = tail = temp;
+        }else {
+        temp.next = head;
+        head = temp;
+        }
+        size++;
+        return true;
+    }
+
+    public boolean removeLast() {
+        Node curr = head;
+        if (head == null) {
+            return true;
+        }
+        for (int i = 1; i < size - 1; i++) {
+            curr = curr.next;
+        }
+        curr.next = null;
+        size--;
+        return true;
+    }
+
+    public boolean removeFirst() {
+        if (head == null) {
+            return true;
+        }
+        head = head.next;
+        size--;
+        return true;
+    }
+
+    public boolean removeByIndex(int index) {
+        Node curr = head;
+        if (size == 0) {
+            return true;
+        }
+
+        for (int i = 1; i < index - 1; i++) {
+            curr = curr.next;
+        }
+        curr.next = curr.next.next;
+        size--;
+        return true;
+    }
+
+    public boolean removeBymiddle()     {
+        Node fast = head;
+        Node slow = head;
+        Node curr = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        while (curr.next != slow) {
+            curr = curr.next;
+        }
+        curr.next = slow.next;
+        
+        return true;
+    }
+
+    public boolean removeAll() {
+        if (size == 0) {
+            return true;
+        }
+        head = tail = null;
+        return true;
+    }
+
+    public int maxNum() {
+        Node curr = head;
+        if (size == 0) {
+            return -1;
+        }
+        Integer max = (Integer) head.val;
+        while (curr != null) {
+            Integer m = (Integer) curr.val;
+            if ((Integer) m > (Integer) max) {
+                max = m;
+            }
+            curr = curr.next;
+        }
+        return max;
+    }
+
+    public int minNum() {
+        Node curr = head;
+        if (size == 0) {
+            return -1;
+        }
+        Integer min = (Integer) head.val;
+        while (curr != null) {
+            Integer m = (Integer) curr.val;
+            if ((Integer) m < (Integer) min) {
+                min = m;
+            }
+            curr = curr.next;
+        }
+        return min;
+    }
+
+    public void reverse(MyLinkedList list) {
+        Node previous = null;
+        Node current = list.head;
+        Node next;
+        while (current != null) {
+            next = current.next;
+            current.next = previous;
+            previous = current;
+            current = next;
+        }
+        list.head = previous;
+    }
+
+    public void Print() {
+        Node curr = head;
+        System.out.print("[ ");
+        while (curr != null) {
+            System.out.print(curr.val + ",");
+            curr = curr.next;
+        }
+        System.out.println(" ]");
+    }
+}
